@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-
+import "@lrnwebcomponents/absolute-position-behavior/absolute-position-behavior.js";
 const logo = new URL('../assets/open-wc-logo.svg', import.meta.url).href;
 
 class MeritBadge extends LitElement {
@@ -51,6 +51,17 @@ class MeritBadge extends LitElement {
     }
   `;
 
+  firstUpdated(changedProperties) {
+    if (super.firstUpdated) {
+      super.firstUpdated(changedProperties);
+    }
+    this.activeNode = this.shadowRoot.querySelector('#badge');
+  }
+
+  skillClick() {
+    this.skillsOpened = !this.skillsOpened;
+  }
+
   constructor() {
     super();
     this.header = 'My app';
@@ -65,6 +76,19 @@ class MeritBadge extends LitElement {
             <div class="title"><span>title</span></div>
           </div>
         </div>
+        <absolute-position-behavior
+          justify
+          position="bottom"
+          allow-overlap
+          sticky
+          auto
+          .target="${this.activeNode}"
+          ?hidden="${!this.skillsOpened}">
+        </absolute-position-behavior>
+        <simple-icon-button
+          icon="cancel"
+          @click="${this.skillClick}">
+        </simple-icon-button>
       </main>
     `;
   }
