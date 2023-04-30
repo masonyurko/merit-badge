@@ -1,10 +1,16 @@
 import { LitElement, html, css } from 'lit';
 import "@lrnwebcomponents/absolute-position-behavior/absolute-position-behavior.js";
+import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
+import '@lrnwebcomponents/simple-icon/simple-icon.js';
 const logo = new URL('../assets/open-wc-logo.svg', import.meta.url).href;
 
 class MeritBadge extends LitElement {
   static properties = {
-    header: { type: String },
+    date: { type: String},
+    title1: { type: String},
+    buttonText: { type: String},
+    activeNode: { type: Object},
+    skillsOpened: { type: Boolean},
   }
 
   static styles = css`
@@ -24,10 +30,32 @@ class MeritBadge extends LitElement {
       font-weight: normal;
     }
 
+    .badge-icon {
+      position: absolute;
+      top: 95px;
+      left: 100px;
+    }
+
     .date {
       position: relative;
       width: 400px;
       height: 400px;
+    }
+
+    .badge-lock {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      background-color: grey;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+    }
+
+    .lock-icon {
+      position: absolute;
+      top: 95px;
+      left: 95px;
     }
 
     .date span {
@@ -37,17 +65,35 @@ class MeritBadge extends LitElement {
       transform: translate(-50%, -50%) rotate(-90deg) skewY(30deg);
     }
 
-    .title {
-      position: relative;
-      width: 400px;
-      height: 400px;
+    .h1 span {
+      height: 200px;
+      position: absolute;
+      width: 20px;
+      left: 0;
+      top: 0;
+      transform-origin: bottom center;
+      transform: rotate(10deg);
     }
 
-    .title span {
-      position: absolute; 
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-90deg) skewY(30deg);
+    .button {
+      position: absolute;
+      left: 75px;
+      top: 230px;
+      width: 65px;
+      padding-bottom: 0px;
+      border: solid black;
+      background-color: white;
+    }
+
+    .button-text {
+      text-align: center;
+    }
+
+    .text {
+      position: relative;
+      width: 400px;
+      border-radius: 50%;
+      transform: rotate(-50deg);
     }
   `;
 
@@ -56,27 +102,72 @@ class MeritBadge extends LitElement {
       super.firstUpdated(changedProperties);
     }
     this.activeNode = this.shadowRoot.querySelector('#badge');
+    this.lettering( 
+      this.shadowRoot.querySelector('#text'),
+      this.date
+    );
   }
 
-  skillClick() {
+  skillClick(e) {
     this.skillsOpened = !this.skillsOpened;
+  }
+
+  lettering(node, text) {
+    var str = typeof text=='undefined'
+        ?node.textContent
+        :text;
+    node.innerHTML='';
+    var openTag = '<span>';
+    var closeTag = '</span>';
+    var newHTML = openTag;
+    var closeTags = closeTag;
+    for(var i=0,iCount=str.length;i<iCount;i++) {
+      newHTML+=str[i]+openTag;
+      closeTags+=closeTag;
+    }
+    node.innerHTML = newHTML+closeTags;
   }
 
   constructor() {
     super();
-    this.header = 'My app';
+    this.title1 = 'Badge Name';
+    this.date = '02-02-22';
+    this.buttonText = 'Unlock';
   }
 
   render() {
     return html`
       <main>
         <div class="badge">
+          <div class="icon"></div>
           <div class="badge-text">
-            <div class="date"><span>date</span></div>
-            <div class="title"><span>title</span></div>
+            <div class='hText'>
+              <h1 id="text">Custom Text</h1>
+            </div>
+
+            <div class="badge-icon">
+              <simple-icon accent-color="black" icon="android">
+              </simple-icon>
+            </div>
+            <div class="title1"><span>${this.title1}</span></div>
+            </div>
           </div>
-        </div>
-        <absolute-position-behavior
+          </div>
+
+          <div class="badge-lock" ?hidden="${this.skillsOpened}">
+              <simple-icon class="lock-icon" accent-color="black" icon="lock">
+              </simple-icon>
+          </div>
+
+          <simple-icon-button
+          icon="cancel"
+          class="button"
+          @click="${this.skillClick}">
+
+          <div class="button-text">Unlock</div>
+          </simple-icon-button>
+
+          <absolute-position-behavior
           justify
           position="bottom"
           allow-overlap
@@ -84,11 +175,8 @@ class MeritBadge extends LitElement {
           auto
           .target="${this.activeNode}"
           ?hidden="${!this.skillsOpened}">
-        </absolute-position-behavior>
-        <simple-icon-button
-          icon="cancel"
-          @click="${this.skillClick}">
-        </simple-icon-button>
+          </absolute-position-behavior>
+        
       </main>
     `;
   }
