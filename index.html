@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="Description" content="Put your description here.">
+  <base href="/">
+
+  <style>
+  </style>
+  <title>merit-badge</title>
+</head>
+
+<body>
+  <merit-badge title1="Code God" date="04-23-02" icon="hardware:keyboard" iconcolor="blue" newcolor="red">
+  </merit-badge>
+
+  <merit-badge title1="IST" date="08-20-23" icon="hardware:computer" iconcolor="green" newcolor="yellow">
+  </merit-badge>
+
+  <merit-badge title1="Weightlifting" date="03-14-23" icon="places:fitness-center" iconcolor="black" newcolor="grey">
+  </merit-badge>
+
+  <merit-badge title1="Driving" date="05-03-2023" icon="maps:direction-car" iconcolor="orange" newcolor="blue">
+  </merit-badge>
+
+  <merit-badge title1="Reading" date="01-25-23" icon="book" iconcolor="yellow" newcolor="green">
+  </merit-badge>
+
+  <script type="module" src="./src/merit-badge.js"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/jquery/dist/lettering.js">
+  
+  $(function() {
+    $(".date").lettering();
+  });  
+  </script>
+</body>
+
+</html>
