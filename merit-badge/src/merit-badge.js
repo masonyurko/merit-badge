@@ -11,17 +11,29 @@ class MeritBadge extends LitElement {
     buttonText: { type: String},
     activeNode: { type: Object},
     skillsOpened: { type: Boolean},
-  }
+    icon: {type: String},
+    iconcolor: {type: String},
+    newcolor: {
+      type: String,
+      reflect: true,
+      attribute: 'newcolor'
+    },
+  };
 
   static styles = css`
+    :host {
+      display: block;
+    }
+
     .badge {
       width: 200px;
       height: 200px;
       border-radius: 50%;
       background-color: blue;
       border: solid black;
-      margin: 15px;
-      font-size: 22px;
+      position: relative;
+      margin: 10px;
+      font-size: 21px;
       font-weight: bold;
       line-height: 1.3em;
       border: 2px dashed white;
@@ -32,8 +44,8 @@ class MeritBadge extends LitElement {
 
     .badge-icon {
       position: absolute;
-      top: 95px;
-      left: 100px;
+      top: -100px;
+      left: 3px;
     }
 
     .date {
@@ -47,13 +59,13 @@ class MeritBadge extends LitElement {
       height: 210px;
       border-radius: 50%;
       background-color: grey;
-      position: absolute;
-      top: 5px;
-      left: 5px;
+      position: relative;
+      top: -87.5px;
+      left: -5px;
     }
 
     .lock-icon {
-      position: absolute;
+      position: relative;
       top: 95px;
       left: 95px;
     }
@@ -69,7 +81,7 @@ class MeritBadge extends LitElement {
       height: 200px;
       position: absolute;
       width: 20px;
-      left: 0;
+      left: -15px;
       top: 0;
       transform-origin: bottom center;
       transform: rotate(10deg);
@@ -91,9 +103,50 @@ class MeritBadge extends LitElement {
 
     .text {
       position: relative;
-      width: 400px;
-      border-radius: 50%;
-      transform: rotate(-50deg);
+      top: 10px;
+      padding-bottom: 0px;      
+      text-align: center;
+      }
+
+    .text1 {
+      position: relative;
+      text-align: center;
+      top: 110px;
+    }
+
+    :host([newcolor="red"]) .badge {
+      background-color: var (--badge-accent-color, red);
+      background-color: red;
+      color: white;
+      box-shadow: 0 0 0 4px red;
+    }
+
+    :host([newcolor="yellow"]) .badge {
+      background-color: var (--badge-accent-color, yellow);
+      background-color: yellow;
+      color: white;
+      box-shadow: 0 0 0 4px yellow;
+    }
+
+      :host([newcolor="grey"]) .badge {
+      background-color: var (--badge-accent-color, grey);
+      background-color: grey;
+      color: white;
+      box-shadow: 0 0 0 4px grey;
+    }
+
+    :host([newcolor="blue"]) .badge {
+      background-color: var (--badge-accent-color, blue);
+      background-color: blue;
+      color: white;
+      box-shadow: 0 0 0 4px blue;
+    }
+
+    :host([newcolor="green"]) .badge {
+      background-color: var (--badge-accent-color, green);
+      background-color: green;
+      color: white;
+      box-shadow: 0 0 0 4px green;
     }
   `;
 
@@ -131,8 +184,10 @@ class MeritBadge extends LitElement {
   constructor() {
     super();
     this.title1 = 'Badge Name';
-    this.date = '02-02-22';
+    this.date = 'Date Received';
     this.buttonText = 'Unlock';
+    this.icon = 'apple';
+    this.iconcolor = 'grey'
   }
 
   render() {
@@ -174,7 +229,8 @@ class MeritBadge extends LitElement {
           sticky
           auto
           .target="${this.activeNode}"
-          ?hidden="${!this.skillsOpened}">
+          ?hidden="${!this.skillsOpened}"
+          >
           </absolute-position-behavior>
         
       </main>
