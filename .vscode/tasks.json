@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "lint",
+			"path": "merit-badge",
+			"problemMatcher": [],
+			"label": "npm: lint - merit-badge",
+			"detail": "eslint --ext .js,.html . --ignore-path .gitignore && prettier \"**/*.js\" --check --ignore-path .gitignore",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
